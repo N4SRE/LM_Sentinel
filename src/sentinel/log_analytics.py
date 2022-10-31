@@ -6,7 +6,7 @@ import hmac
 import base64
 
 class LogAnalytics:
-    def __init__(self, customer_id, shared_key, log_type):
+    def __init__(self, customer_id: str, shared_key: str, log_type: str):
         self.customer_id = customer_id
         self.shared_key = shared_key
         self.log_type = log_type

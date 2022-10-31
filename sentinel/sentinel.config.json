@@ -1,0 +1,11 @@
+{
+    "lm_company": "node4",
+    "az_table": "logic_monitor_audit",
+    "lookback_period_seconds": 300,
+    "vault": {
+        "logicmonitor_id": "LM_ID",
+        "logicmonitor_key": "LM_KEY",
+        "azure_id": "AZ_ID",
+        "azure_secret": "AZ_SECRET"
+    }
+}
