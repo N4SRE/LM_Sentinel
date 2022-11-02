@@ -1,6 +1,5 @@
 # Standard
 config.py
-**/__pycache__
 __pycache__
 __pycache__/*.pyc
 .vscode/launch.json
