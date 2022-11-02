@@ -1,12 +1,12 @@
-# this workflow will push the contents of the repo into the azure function k3-token-watcher
+# this workflow will push the contents of the repo into the defined azure function
 
 name: function_deploy
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
