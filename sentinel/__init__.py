@@ -1,6 +1,5 @@
 import azure.functions as func
 import pathlib
-import argparse
 
 from ..src.sentinel.pusher import Sentinel
 from ..src.config.loader import SentinelConfigLoader

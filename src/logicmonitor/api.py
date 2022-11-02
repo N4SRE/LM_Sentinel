@@ -26,6 +26,7 @@ class LM_API:
             querystr = f'v=2&size={self.page_size}&offset={offset}&filter=happenedOn>:{log_history},happenedOn<:{log_now}' # Define filter & result size
             url = f"https://{self.company}.logicmonitor.com/santaba/rest{endpoint}?{querystr}"
             response = requests.get(url, auth=LM_Auth(client_id=self.client_id, client_key=self.client_key))
+            response.raise_for_status()
             response_json = response.json()
             total_results = response_json.get('total')
             total_results_absolute = abs(total_results)  # handle negative totals
