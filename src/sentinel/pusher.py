@@ -1,4 +1,5 @@
 import os
+import logging
 
 from ..config.loader import SentinelConfig
 from ..logicmonitor.api import LM_API
@@ -20,8 +21,8 @@ class Sentinel:
     self.la = LogAnalytics(customer_id=self.az_id, shared_key=self.az_secret, log_type=self.config.az_table)
 
   def push(self):
-    print(self.lm_id)
-    print(self.az_id)
+    logging.info(self.lm_id)
+    logging.info(self.az_id)
 
     # Grab last 5 minutes of logs
     audit_json = self.lm.getAuditLog(period=self.config.lookback_period_seconds)
