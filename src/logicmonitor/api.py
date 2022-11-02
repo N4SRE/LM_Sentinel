@@ -15,7 +15,7 @@ class LM_API:
 
     def getAuditLog(self, period: int):
         all_auditlogs = []
-        log_history = str(int(time.time())-60*period) # Generate timestamp for x minutes ago
+        log_history = str(int(time.time()-period)) # Generate timestamp for x seconds ago
         log_now = str(int(time.time()))
         endpoint = '/setting/accesslogs'
 
@@ -23,7 +23,7 @@ class LM_API:
         total_results_absolute = 1
 
         while offset < total_results_absolute:
-            querystr = f'v=2&size={self.page_size}&offset={offset}&filter=happenedOn>:{log_history},happenedOn<:{log_now}' # Define filter & result size
+            querystr = f'v=2&size={self.page_size}&offset={offset}&filter=happenedOn<:{log_now},happenedOn>:{log_history}' # Define filter & result size
             url = f"https://{self.company}.logicmonitor.com/santaba/rest{endpoint}?{querystr}"
             response = requests.get(url, auth=LM_Auth(client_id=self.client_id, client_key=self.client_key))
             response.raise_for_status()
