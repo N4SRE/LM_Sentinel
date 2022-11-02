@@ -45,11 +45,11 @@ jobs:
     - name: lint_flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 ./token-watcher-im --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 ./token-watcher-dsw --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 ./sentinel --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 ./src --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 ./token-watcher-im --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
-        flake8 ./token-watcher-dsw --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
+        flake8 ./sentinel --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
+        flake8 ./src --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
         
     - name: 'deploy_azure'
       uses: Azure/functions-action@v1
