@@ -21,9 +21,6 @@ class Sentinel:
     self.la = LogAnalytics(customer_id=self.az_id, shared_key=self.az_secret, log_type=self.config.az_table)
 
   def push(self):
-    logging.info(self.lm_id)
-    logging.info(self.az_id)
-
     # Grab last 5 minutes of logs
     audit_json = self.lm.getAuditLog(period=self.config.lookback_period_seconds)
 
