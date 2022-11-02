@@ -25,8 +25,5 @@ class Sentinel:
     # Grab last 5 minutes of logs
     audit_json = self.lm.getAuditLog(period=self.config.lookback_period_seconds)
 
-    # print(audit_json)
-    # pprint.pprint(audit_json)
-
     # Send logs into Azure
     self.la.sendtoAzure(audit_json)
