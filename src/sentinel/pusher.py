@@ -1,6 +1,4 @@
-import logging
 import os
-import pprint
 
 from ..config.loader import SentinelConfig
 from ..logicmonitor.api import LM_API
@@ -17,7 +15,7 @@ class Sentinel:
     self.az_id      = os.getenv(self.config.vault.get('azure_id'))
     self.az_secret  = os.getenv(self.config.vault.get('azure_secret'))
     # init logicmonitor api class
-    self.lm = LM_API(company=self.config.lm_company, client_id=self.lm_id, client_key=self.lm_key)
+    self.lm = LM_API(company=self.config.lm_company, client_id=self.lm_id, client_key=self.lm_key, page_size=self.config.page_size)
     # init azure api class
     self.la = LogAnalytics(customer_id=self.az_id, shared_key=self.az_secret, log_type=self.config.az_table)
 

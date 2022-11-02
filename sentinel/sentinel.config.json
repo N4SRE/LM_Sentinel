@@ -2,6 +2,7 @@
     "lm_company": "node4",
     "az_table": "logic_monitor_audit",
     "lookback_period_seconds": 300,
+    "page_size": 1000,
     "vault": {
         "logicmonitor_id": "LM_ID",
         "logicmonitor_key": "LM_KEY",

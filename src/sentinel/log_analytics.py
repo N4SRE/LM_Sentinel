@@ -40,9 +40,9 @@ class LogAnalytics:
 
         response = requests.post(uri,data=body, headers=headers)
         if (response.status_code >= 200 and response.status_code <= 299):
-            print('Accepted')
+            print('Push to Sentinel: Accepted')
         else:
-            print("Response code: " + str(response.status_code))
+            print("Push to Sentinel: Response code: " + str(response.status_code))
 
     def sendtoAzure(self,data):
         body = json.dumps(data)
