@@ -1,0 +1,60 @@
+# this workflow will push the contents of the repo into the azure function k3-token-watcher
+
+name: function_deploy
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+env:
+  AZURE_FUNCTIONAPP_NAME: logicmonitor-audit-sentinel   # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'                   # set this to the path to your web app project, defaults to the repository root
+  PYTHON_VERSION: '3.9'                                 # set this to the Python version to use (supports 3.6, 3.7, 3.8)
+
+jobs:
+  run:
+    name: build_and_deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'checkout_github_action'
+      uses: actions/checkout@v3
+    
+    - name: setup_python_${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: install_prereq
+      shell: bash
+      run: |
+        # azure
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        popd
+        # local
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+    - name: lint_flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 ./token-watcher-im --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 ./token-watcher-dsw --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 ./token-watcher-im --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
+        flake8 ./token-watcher-dsw --count --exit-zero --max-complexity=10 --max-line-length=175 --statistics
+        
+    - name: 'deploy_azure'
+      uses: Azure/functions-action@v1
+      id: logicmonitor-audit-sentinel
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}

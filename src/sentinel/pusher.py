@@ -1,5 +1,4 @@
 import logging
-import logging
 import os
 import pprint
 
@@ -26,13 +25,8 @@ class Sentinel:
     # Grab last 5 minutes of logs
     audit_json = self.lm.getAuditLog(period=self.config.lookback_period_seconds)
 
-    # pprint(audit_json)
-
-
-    # Identify possible truncation of logs
-    #if len(audit_json['items']) == 1000:
-    #    print("Maximum length (1000) returned - results truncated")
+    # print(audit_json)
+    # pprint.pprint(audit_json)
 
     # Send logs into Azure
-    #for item in audit_json['items']:
-    #    self.la.sendtoAzure(item)
+    self.la.sendtoAzure(audit_json)
